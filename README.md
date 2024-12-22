@@ -22,8 +22,6 @@ Moon Dev Server is a Spring Boot application that provides RESTful APIs for mana
 - Spring Boot 3.3.4
 - Maven
 - MySQL
-- H2 Database (for testing)
-- JWT (JSON Web Tokens) for authentication
 - Lombok
 - Mustache
 - Thymeleaf
