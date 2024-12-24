@@ -2,6 +2,7 @@ package com.development.moon.dev.controller;
 
 import com.development.moon.dev.model.Admin;
 import com.development.moon.dev.model.Role;
+import com.development.moon.dev.model.dto.LoginRequest;
 import com.development.moon.dev.service.AdminService;
 import com.development.moon.dev.service.RoleService;
 import com.development.moon.dev.usercase.EventLogdb;
@@ -76,6 +77,15 @@ public class AdminController {
         return adminService.save(admin);
     }
 
+    @PostMapping("/auth")
+    boolean auth(@RequestBody LoginRequest loginRequest) {
+        Admin checkAdmin = adminService.findByReg(loginRequest.getLogin());
+
+        adminValidator.validatePasswordAdmin(checkAdmin, loginRequest.getPassword());
+
+        return true;
+    }
+
 
     /**
      * Retrieves all Admin entities.
@@ -113,6 +123,8 @@ public class AdminController {
         return admin;
     }
 
+
+
     /**
      * Updates an existing Admin entity by its ID.
      *
@@ -130,7 +142,9 @@ public class AdminController {
         UpdateAdmin.setName(admin.getName() == null || admin.getName().isEmpty() ? UpdateAdmin.getName() : admin.getName());
         UpdateAdmin.setRole(admin.getRole() == null ? UpdateAdmin.getRole() : admin.getRole());
         UpdateAdmin.setLogin(admin.getLogin() == null || admin.getLogin().isEmpty() ? UpdateAdmin.getLogin() : admin.getLogin());
-        if (admin.getPassword() != null && !admin.getPassword().isEmpty()) {
+
+
+        if (admin.getPassword() != null && !admin.getPassword().isEmpty() && !admin.getPassword().equals(UpdateAdmin.getPassword())) {
             UpdateAdmin.setPassword(passwordEncoder.encode(admin.getPassword()));
         }
         Map<String, String> eventDetails = new LinkedHashMap<>();
@@ -162,7 +176,7 @@ public class AdminController {
         adminValidator.validateCreateAdmin(admin);
 
 
-        // Logs the event of deleting an Admin entity
+
         Map<String, String> eventDetails = new LinkedHashMap<>();
         eventDetails.put("User-Agent", request.getHeader("User-Agent"));
         eventDetails.put("RemoteAddr", request.getRemoteAddr());
@@ -198,7 +212,7 @@ public class AdminController {
         eventDetails.put("RemoteAddr", request.getRemoteAddr());
         eventDetails.put("Device", request.getHeader("User-Agent").contains("Mobi") ? "Mobile" : "Desktop");
         eventDetails.put("Created by", whoAdmin.getName());
-
+        eventDetails.put("Create ->", role.getName());
         eventLogdb.logEvent(String.valueOf(whoAdmin.getId()), whoAdmin.getName(), "created role", jsonutil.toJSON(eventDetails));
 
         return roleService.save(role);
@@ -239,7 +253,7 @@ public class AdminController {
      * @return a success message if the deletion was successful, otherwise an error message
      */
     @DeleteMapping("/role/{id}")
-    String deleteRoleById(@RequestBody Role role, @PathVariable Integer id){
+    String deleteRoleById(@PathVariable Integer id){
         Role UpdateRole = roleService.findById(id);
         adminValidator.validateCreateRole(UpdateRole);
         return roleService.deleteById(id) ? "Success!" : "Deleting not completed.";
