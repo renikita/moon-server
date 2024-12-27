@@ -218,6 +218,19 @@ public class AdminController {
         return roleService.save(role);
     }
 
+    /**
+     * Retrieves a Role entity by its ID.
+     *
+     * @param id the ID of the Role entity to retrieve
+     * @return the retrieved Role entity
+     */
+
+    @GetMapping("/role/{id}")
+    Role getRoleById(@PathVariable Integer id){
+        Role role = roleService.findById(id);
+        adminValidator.validateCreateRole(role);
+        return role;
+    }
 
 
 
