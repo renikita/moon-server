@@ -67,34 +67,45 @@ The server will start on `http://localhost:8080`. You can access the APIs using 
 
 ### User Responses
 
-- `POST /response/user` - Save a new user response
-- `GET /response/users` - Retrieve all user responses
-- `GET /response/user/{id}` - Retrieve a user response by ID
-- `PUT /response/user/{id}` - Update a user response by ID
-- `DELETE /response/user/{id}` - Delete a user response by ID
+| HTTP Method | Endpoint              | Description                      |
+|-------------|-----------------------|----------------------------------|
+| POST        | `/response/user`      | Save a new user response         |
+| GET         | `/response/users`     | Retrieve all user responses      |
+| GET         | `/response/user/{id}` | Retrieve a user response by ID   |
+| PUT         | `/response/user/{id}` | Update a user response by ID     |
+| DELETE      | `/response/user/{id}` | Delete a user response by ID     |
 
 ### Admin
 
-- `POST /adminpage/admin` - Save a new admin
-- `GET /adminpage/admins` - Retrieve all admins
-- `GET /adminpage/admin/{id}` - Retrieve an admin by ID
-- `PUT /adminpage/admin/{id}` - Update an admin by ID
-- `DELETE /adminpage/admin/{id}` - Delete an admin by ID
+| HTTP Method | Endpoint                 | Description                 |
+|-------------|--------------------------|-----------------------------|
+| POST        | `/adminpage/admin`       | Save a new admin            |
+| GET         | `/adminpage/admins`      | Retrieve all admins         |
+| GET         | `/adminpage/admin/{id}`  | Retrieve an admin by ID     |
+| PUT         | `/adminpage/admin/{id}`  | Update an admin by ID       |
+| DELETE      | `/adminpage/admin/{id}`  | Delete an admin by ID       |
 
 ### Roles
 
-- `POST /adminpage/role` - Save a new role
-- `GET /adminpage/roles` - Retrieve all roles
-- `PUT /adminpage/role/{id}` - Update a role by ID
-- `DELETE /adminpage/role/{id}` - Delete a role by ID
+| HTTP Method | Endpoint                 | Description              |
+|-------------|--------------------------|--------------------------|
+| POST        | `/adminpage/role`        | Save a new role          |
+| GET         | `/adminpage/roles`       | Retrieve all roles       |
+| PUT         | `/adminpage/role/{id}`   | Update a role by ID      |
+| DELETE      | `/adminpage/role/{id}`   | Delete a role by ID      |
 
 ### Event Logs
 
-- `GET /eventlog/all` - Retrieve all event logs
+| HTTP Method | Endpoint          | Description                |
+|-------------|-------------------|----------------------------|
+| GET         | `/eventlog/all`   | Retrieve all event logs    |
 
 ### Authentication
 
-- `POST /auth/login` - Login and create a session
+| HTTP Method | Endpoint        | Description               |
+|-------------|-----------------|---------------------------|
+| POST        | `/auth/login`   | Login and create a session |
+
 
 ## Contributing
 
@@ -103,3 +114,16 @@ Contributions are welcome! Please fork the repository and create a pull request 
 ## License
 
 This project is licensed under the Eclipse Public License 2.0.
+
+## Database
+
+This project uses **MySQL** as the database. Spring Boot automatically manages the database connection and schema generation.
+
+### Prerequisites
+
+Ensure you have MySQL installed and running on your local machine.
+
+### Configuration
+
+The database connection is configured in the `src/main/resources/application.properties` file.
+
